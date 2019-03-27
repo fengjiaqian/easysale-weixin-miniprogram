@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/webview/index",
+    "pages/address/address",
+    "pages/scon/scon",
+    "pages/makeCall/makeCall",
+    "pages/payment/payment"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "debug": true
+}
