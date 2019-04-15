@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/login/index",
+    "pages/mobile/mobile",
     "pages/webview/index",
     "pages/address/address",
     "pages/scon/scon",

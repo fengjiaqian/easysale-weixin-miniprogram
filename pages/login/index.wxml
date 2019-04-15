@@ -1,0 +1,12 @@
+<view>
+  <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号码一键登录</button> -->
+  <!--  -->
+  <!-- 需要使用 button 来授权登录 -->
+  <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">获取用户信息</button>
+  <view class="commodity_screen" bindtap="hideModal" wx:if="{{showModalStatus}}"></view>
+  <view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <view class="">
+      <button id="tapTest" data-hi="WeChat" bindtap="_fetchWxCode">微信授权</button>
+    </view>
+  </view>
+</view>

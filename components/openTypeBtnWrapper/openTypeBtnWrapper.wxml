@@ -1,0 +1,6 @@
+<view animation="{{animationData}}" class="commodity_attr_box" wx:if="{{showModalStatus}}">
+    <view class="">
+        <!-- <button open-type="getUserInfo" bindgetuserinfo="getuserinfo">获取用户信息</button> -->
+        <slot></slot>
+    </view>
+</view>
