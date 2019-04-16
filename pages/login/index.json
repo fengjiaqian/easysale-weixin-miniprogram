@@ -1,7 +1,3 @@
 {
-    "navigationBarTitleText": "",
-    "usingComponents": {
-      "btn-wrapper": "../../components/openTypeBtnWrapper/openTypeBtnWrapper"
-    }
-  }
-  
+  "navigationBarTitleText": ""
+}

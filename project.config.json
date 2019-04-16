@@ -13,7 +13,7 @@
 		"uglifyFileName": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.6.5",
+	"libVersion": "1.6.8",
 	"appid": "wx922ae1f230ae4d51",
 	"projectname": "easySale",
 	"condition": {
