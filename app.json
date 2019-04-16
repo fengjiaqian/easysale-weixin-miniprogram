@@ -1,7 +1,8 @@
 {
   "pages": [
-    "pages/login/index",
     "pages/mobile/mobile",
+    "pages/login/index",
+    
     "pages/webview/index",
     "pages/address/address",
     "pages/scon/scon",

@@ -1,3 +1,7 @@
 <view>
-    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号码一键登录</button>
+    <!-- <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机号码一键登录</button> -->
+    <image class="img" src="../images/quanquan2.png"></image>
+<view class="name">易经销</view>
+<button class="true">微信手机号快捷绑定</button>
+    
 </view>
