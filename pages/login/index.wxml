@@ -1,6 +1,6 @@
 <view>
-  <!-- <nav-bar navbar-data='{{nvabarData}}'></nav-bar> -->
-  <!-- <view class='home-page' style='margin-top: {{height}}px'>home page</view> -->
+  <!-- <nav-bar navbar-data='{{nvabarData}}'></nav-bar>
+  <view class='home-page' style='margin-top: {{height}}px'>home page</view> -->
   <view class="commodity_screen"></view>
   <view class="commodity_attr_box">
     <view class="info-content">

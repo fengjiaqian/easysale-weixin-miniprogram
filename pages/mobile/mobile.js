@@ -1,4 +1,5 @@
 import { fetchWxCode, loginWithWxCode } from '../../utils/loginPack'
+
 Page({
   data: {
 
@@ -28,24 +29,28 @@ Page({
   getPhoneNumber(e) {
     const { encryptedData, iv } = e.detail;
     if (!encryptedData) {
-      console.log('获取手机号码失败');
+      console.log('获取手机号码失败')
       return false;
     }
+    const nickName = wx.getStorageSync('nickName');
+    const avatarUrl = wx.getStorageSync('avatarUrl');
     const params = {
       encryptedData,
       iv,
-      authCode: this.wxCode
+      authCode: this.wxCode,
+      nickName,
+      avatarUrl
     }
     //多给 nickName avatarUrl
     loginWithWxCode(params).then((res) => {
       console.log(res.data);
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userId } = res.data;  //bindSuccess
+        const { mobileNo, token, userType } = res.data;  //bindSuccess
         wx.setStorageSync('mobileNo', mobileNo);
         wx.setStorageSync('token', token);
-        wx.setStorageSync('userId', userId);
+        wx.setStorageSync('userType', userType);
         wx.redirectTo({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userId=${userId}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
         })
       }
     }).catch(err => {
@@ -53,6 +58,6 @@ Page({
       console.log(err);
     })
   },
- 
+
 
 })

@@ -1,20 +1,15 @@
 {
   "pages": [
-    "pages/mobile/mobile",
     "pages/login/index",
-    
-    "pages/webview/index",
-    "pages/address/address",
-    "pages/scon/scon",
-    "pages/makeCall/makeCall",
-    "pages/payment/payment"
+    "pages/mobile/mobile",
+    "pages/webview/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black",
-    "navigationStyle": "custom"
+    "backgroundColor": "#fff",
+    "navigationStyle": "default"
   },
   "debug": true
 }

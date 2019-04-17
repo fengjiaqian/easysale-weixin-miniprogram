@@ -1,13 +1,7 @@
 import { getWxSetting, fetchWxUserInfo } from '../../utils/loginPack'
 Page({
   data: {
-    // 组件所需的参数
-    nvabarData: {
-      showCapsule: 1, //是否显示左上角图标   1表示显示    0表示不显示
-      title: '我的主页', //导航栏 中间的标题
-    },
-    // 此页面 页面内容距最顶部的距离
-    height: app.globalData.height * 2 + 20,
+
   },
   onLoad: function (options) {
     /**
@@ -38,13 +32,16 @@ Page({
 
   },
   _initAuth() {
+    //mobileNo  token  userType 
     const mobileNo = wx.getStorageSync('mobileNo');
     const token = wx.getStorageSync('token');
+    const userType = wx.getStorageSync('userType');
+
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
-    //有用户手机缓存 用户身份访问
-    if (mobileNo && token) {
-      const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${token}`
+    //有用户手机缓存  用户身份访问
+    if (mobileNo && token && userType) {
+      const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
       return wx.redirectTo({ url });
     }
     //有用户头像缓存  
@@ -52,7 +49,7 @@ Page({
       return wx.redirectTo({
         url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}`
       })
-    } else { //没有用户头像缓存 判断是否授权scope.userInfo
+    } else { //没有用户头像缓存,判断是否授权 scope.userInfo
       getWxSetting().then(res => {
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框，自动跳转到首页

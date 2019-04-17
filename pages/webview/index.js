@@ -16,9 +16,9 @@ Page({
     }
     //
     if (options.token) {
-      const { mobileNo, token, userId } = options;
+      const { mobileNo, token, userType } = options;
       this.setData({
-        url: `http://192.168.0.211:9999/#/navi/home?mobileNo=${mobileNo}&token=${token}&userId=${userId}`
+        url: `http://192.168.0.211:9999/#/navi/home?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
       })
     }
   },
