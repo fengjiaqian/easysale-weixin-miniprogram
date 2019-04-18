@@ -24,5 +24,10 @@ Page({
   },
   onShow: function () {
 
-  }
+  },
+  onShareAppMessage() {
+    return {
+      path: "/pages/login/index"
+    }
+  },
 })
