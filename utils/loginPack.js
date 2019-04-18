@@ -81,9 +81,23 @@ const loginWithWxCode = function (data) {
   })
 }
 
+
+// 测试登录   手机号
+const testLogin = function (data) {
+
+  const url = 'login/testLogin',
+    method = 'post';
+  return $ajax(url, method, data).then(res => {
+    return Promise.resolve(res.data);
+  }).catch(err => {
+    return Promise.reject(err);
+  })
+}
+
 export {
   fetchWxCode,
   getWxSetting,
   fetchWxUserInfo,
-  loginWithWxCode
+  loginWithWxCode,
+  testLogin
 }

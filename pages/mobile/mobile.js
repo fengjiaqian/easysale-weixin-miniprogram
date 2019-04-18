@@ -1,4 +1,4 @@
-import { fetchWxCode, loginWithWxCode } from '../../utils/loginPack'
+import { fetchWxCode, loginWithWxCode, testLogin } from '../../utils/loginPack'
 
 Page({
   data: {
@@ -58,6 +58,31 @@ Page({
       console.log(err);
     })
   },
-
+  //测试登录
+  _testLogin(event) {
+    const { userType } = event.target.dataset;
+    console.log(userType);
+    let phone = '13399996666';
+    if (userType == 1) {
+      phone = '15071124354';
+    } else if (userType == 2) {
+      phone = '13422058968';
+    }
+    testLogin({ phone }).then((res) => {
+      console.log(res.data);
+      if (res.result == "success" && res.data) {
+        const { mobileNo, token, userType } = res.data;   //bindSuccess
+        wx.setStorageSync('mobileNo', mobileNo);
+        wx.setStorageSync('token', token);
+        wx.setStorageSync('userType', userType);
+        wx.redirectTo({
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
+        })
+      }
+    }).catch(err => {
+      //TODO 
+      console.log(err);
+    })
+  }
 
 })

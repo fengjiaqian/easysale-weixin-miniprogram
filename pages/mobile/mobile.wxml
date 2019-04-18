@@ -4,4 +4,7 @@
     <button class="tel-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
         手机号码一键登录
     </button>
+    <button  class="tel-btn" bindtap="_testLogin" data-user-type="1">经销商测试登录</button>
+    <button  class="tel-btn" bindtap="_testLogin" data-user-type="2">销售人员测试登录</button>
+    <button  class="tel-btn" bindtap="_testLogin" data-user-type="3">终端用户测试登录</button>
 </view>
