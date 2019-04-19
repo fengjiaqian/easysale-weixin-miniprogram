@@ -2,7 +2,7 @@
  * created by yuanzishu 2019/04/08
  * 二次封装微信登录相关api  返回promise
  */
-import _apiUrl from '../config'
+import {_apiUrl} from '../config'
 
 const $ajax = function (url, method, data) {
   url = _apiUrl + url;
@@ -44,6 +44,20 @@ const fetchWxCode = function () {
 const getWxSetting = function () {
   return new Promise((resolve, reject) => {
     wx.getSetting({
+      success(res) {
+        resolve(res)
+      },
+      fail(err) {
+        reject(err)
+      }
+    })
+  })
+}
+
+// 打开地图选择位置
+const getWxLocation = function () {
+  return new Promise((resolve, reject) => {
+    wx.chooseLocation({
       success(res) {
         resolve(res)
       },
@@ -99,5 +113,6 @@ export {
   getWxSetting,
   fetchWxUserInfo,
   loginWithWxCode,
-  testLogin
+  testLogin,
+  getWxLocation
 }

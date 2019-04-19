@@ -6,19 +6,27 @@ Page({
   },
   onLoad: function (options) {
     console.log(options)
+    //从定位页面过来回到定位页面去
+    if (options.resourceType == 'location'){
+      let passData = JSON.parse(options.passData)
+      this.setData({
+        url: `http://192.168.0.191:9999/#${passData.path}?passData=${options.passData}`
+      })
+      return
+    }
     //TODO 
     if (options.nickName) {
       const nickName = encodeURIComponent(options.nickName);
       const avatarUrl = encodeURIComponent(options.avatarUrl);
       this.setData({
-        url: `http://192.168.0.211:9999/#/navi/home?nickName=${nickName}&avatarUrl=${avatarUrl}`
+        url: `http://192.168.0.191:9999/#/navi/home?nickName=${nickName}&avatarUrl=${avatarUrl}`
       })
     }
     //
     if (options.token) {
       const { mobileNo, token, userType } = options;
       this.setData({
-        url: `http://192.168.0.211:9999/#/navi/home?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
+        url: `http://192.168.0.191:9999/#/navi/home?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
       })
     }
   },

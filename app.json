@@ -2,7 +2,8 @@
   "pages": [
     "pages/login/index",
     "pages/mobile/mobile",
-    "pages/webview/index"
+    "pages/webview/index",
+    "pages/location/location"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -10,6 +11,11 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#fff",
     "navigationStyle": "default"
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
   },
   "debug": true
 }
