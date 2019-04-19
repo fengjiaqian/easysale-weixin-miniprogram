@@ -50,7 +50,7 @@ Page({
         wx.setStorageSync('token', token);
         wx.setStorageSync('userType', userType);
         wx.redirectTo({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
         })
       }
     }).catch(err => {
@@ -76,7 +76,7 @@ Page({
         wx.setStorageSync('token', token);
         wx.setStorageSync('userType', userType);
         wx.redirectTo({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
         })
       }
     }).catch(err => {

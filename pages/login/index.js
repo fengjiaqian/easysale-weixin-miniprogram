@@ -41,7 +41,7 @@ Page({
     const avatarUrl = wx.getStorageSync('avatarUrl');
     //有用户手机缓存  用户身份访问
     if (mobileNo && token && userType) {
-      const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${token}&userType=${userType}`
+      const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
       return wx.redirectTo({ url });
     }
     //有用户头像缓存  
