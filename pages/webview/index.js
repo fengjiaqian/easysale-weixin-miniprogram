@@ -11,12 +11,11 @@ Page({
     //从定位页面过来回到定位页面去
     if (options.resourceType == 'location') {
       let passData = JSON.parse(options.passData)
-      this.setData({
+      return this.setData({
         url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
       })
-      return
     }
-    //TODO 
+    // TODO 
     if (options.nickName) {
       const nickName = encodeURIComponent(options.nickName);
       const avatarUrl = encodeURIComponent(options.avatarUrl);
