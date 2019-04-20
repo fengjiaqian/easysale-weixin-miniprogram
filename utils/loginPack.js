@@ -55,6 +55,21 @@ const getWxSetting = function () {
 }
 
 // 打开地图选择位置
+const getWxAuthorize = function (scopeType) {
+  return new Promise((resolve, reject) => {
+    wx.authorize({
+      scope: scopeType,
+      success(res) {
+        resolve(res)
+      },
+      fail(err) {
+        reject(err)
+      }
+    })
+  })
+}
+
+// 打开地图选择位置
 const getWxLocation = function () {
   return new Promise((resolve, reject) => {
     wx.chooseLocation({
@@ -67,6 +82,7 @@ const getWxLocation = function () {
     })
   })
 }
+
 
 //获取用户个人信息    在用户已授权的情况下调用此接口，可成功获取用户信息,否则直接fail。
 const fetchWxUserInfo = function () {
@@ -114,5 +130,6 @@ export {
   fetchWxUserInfo,
   loginWithWxCode,
   testLogin,
-  getWxLocation
+  getWxLocation,
+  getWxAuthorize
 }

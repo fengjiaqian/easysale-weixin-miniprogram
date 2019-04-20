@@ -1,4 +1,4 @@
-import { getWxSetting, getWxLocation } from '../../utils/loginPack'
+import { getWxSetting, getWxLocation, getWxAuthorize } from '../../utils/loginPack'
 import { $yjpDialog } from '../../components/yjp'
 let QQMapWX = require('./../../plugins/wxSDK/qqmap-wx-jssdk.min.js')
 import { TencentMapKey } from '../../config'
@@ -40,7 +40,7 @@ Page({
       .then(data => {
         //没有授权则弹框请求授权
         if (!data.authSetting[`scope.userLocation`]) {
-          return wx.authorize({ scope: `scope.userLocation` })
+          return getWxAuthorize(`scope.userLocation`)
             .catch(e => {
               $yjpDialog.open({
                 dialogType: `defaultText`,
@@ -56,31 +56,42 @@ Page({
         }
       })
       .then(data =>
-        getWxLocation().catch(e => Promise.reject(`未选择地址`))
+        getWxLocation().catch((e) => {
+          //console.log('没有选地址')
+        })
       )
       .then(data => {
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: data.latitude,
-            longitude: data.longitude
-          },
-          success: (res) => {
-            console.log('成功',res)
-            let addressData = {
-              address: res.result.address,
-              longitude: data.latitude,
-              latitude: data.longitude
+        if (data){
+          qqmapsdk.reverseGeocoder({
+            location: {
+              latitude: data.latitude,
+              longitude: data.longitude
+            },
+            success: (res) => {
+              //console.log('成功', res)
+              let province = res.result.address_component.province;
+              let city = res.result.address_component.city;
+              let county = res.result.address_component.district;
+              let street = res.result.address_component.street;
+              let address = province + city + county + street
+              let addressData = {
+                address: address || res.result.address,
+                longitude: data.latitude,
+                latitude: data.longitude
+              }
+              this.returnWebview({ addressData })
+            },
+            fail: (res) => {
+              //console.log('失败', res)
+              this.returnWebview({ addressData: res.result })
+            },
+            complete: (res) => {
+
             }
-            this.returnWebview({addressData})
-          },
-          fail: (res) => {
-            console.log('失败', res)
-            this.returnWebview({ addressData: res.result })
-          },
-          complete: (res) => {
-            
-          }
-        })
+          })
+        }else{
+          this.returnWebview({})
+        }
       })
   },
   returnWebview(res){
