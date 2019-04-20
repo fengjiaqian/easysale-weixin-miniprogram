@@ -62,7 +62,7 @@ Page({
   _testLogin(event) {
     const { userType } = event.target.dataset;
     console.log(userType);
-    let phone = '13399996666';
+    let phone = '15500000002';
     if (userType == 1) {
       phone = '15071124354';
     } else if (userType == 2) {
