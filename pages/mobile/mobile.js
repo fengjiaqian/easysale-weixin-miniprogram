@@ -46,9 +46,7 @@ Page({
       console.log(res.data);
       if (res.result == "success" && res.data) {
         const { mobileNo, token, userType } = res.data;  //bindSuccess
-        wx.setStorageSync('mobileNo', mobileNo);
-        wx.setStorageSync('token', token);
-        wx.setStorageSync('userType', userType);
+        mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         wx.redirectTo({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
         })
@@ -72,9 +70,7 @@ Page({
       console.log(res.data);
       if (res.result == "success" && res.data) {
         const { mobileNo, token, userType } = res.data;   //bindSuccess
-        wx.setStorageSync('mobileNo', mobileNo);
-        wx.setStorageSync('token', token);
-        wx.setStorageSync('userType', userType);
+        mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         wx.redirectTo({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
         })

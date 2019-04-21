@@ -1,13 +1,9 @@
-import { getWxSetting, fetchWxUserInfo } from '../../utils/loginPack'
+import { getWxSetting, fetchWxUserInfo, testLogin } from '../../utils/loginPack'
 Page({
   data: {
 
   },
   onLoad: function (options) {
-    /**
-     * 1.没有token,mobileNo的话，弹框授权，用户手动一键微信登录，写缓存并跳转首页。
-     * 2.有token,mobileNo的情况,自动登录(暂时没有登录流程),故直接跳转首页。
-     */
     /**
      * 1.第一次进入程序，获取userInfo（昵称和头像url），并带入网页，我的界面可以展示。
      *   此时，所有页面均以访客模式浏览，根据页面权限是否进入手机号一键登录，调用wx.login(),并获取手机号，发送给后台，此时带入昵称和头像信息。
@@ -34,15 +30,26 @@ Page({
   _initAuth() {
     //mobileNo  token  userType 
     const mobileNo = wx.getStorageSync('mobileNo');
-    const token = wx.getStorageSync('token');
-    const userType = wx.getStorageSync('userType');
-
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
-    //有用户手机缓存  用户身份访问
-    if (mobileNo && token && userType) {
-      const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
-      return wx.redirectTo({ url });
+    //有用户手机缓存  用户身份访问  还是要走一边登录流程 
+    if (mobileNo) {
+      // const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
+      // return wx.redirectTo({ url });
+      /**** */
+      testLogin({ phone: mobileNo }).then((res) => {
+        console.log(res.data);
+        if (res.result == "success" && res.data) {
+          const { mobileNo, token, userType } = res.data;
+          mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
+          wx.redirectTo({
+            url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
+          })
+        }
+      }).catch(err => {
+        //TODO 
+        console.log(err);
+      })
     }
     //有用户头像缓存  
     if (nickName && avatarUrl) {

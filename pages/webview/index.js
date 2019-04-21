@@ -15,19 +15,18 @@ Page({
         url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
       })
     }
+    if (options.token) {
+      const { mobileNo, token, userType } = options;
+      return this.setData({
+        url: webViewUrl + `/#/navi/home?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}`
+      })
+    }
     // TODO 
     if (options.nickName) {
       const nickName = encodeURIComponent(options.nickName);
       const avatarUrl = encodeURIComponent(options.avatarUrl);
       this.setData({
         url: webViewUrl + `/#/navi/home?nickName=${nickName}&avatarUrl=${avatarUrl}`
-      })
-    }
-    //
-    if (options.token) {
-      const { mobileNo, token, userType } = options;
-      this.setData({
-        url: webViewUrl + `/#/navi/home?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}`
       })
     }
   },
