@@ -13,7 +13,7 @@ Page({
      *   没有手机号码，是否有用户头像或者userInfo授权，带入头像昵称，以访客形式访问。
      * 
      */
-    this._initAuth();
+    this._initAuth(options);
   },
   onReady: function () {
 
@@ -27,34 +27,39 @@ Page({
   onUnload: function () {
 
   },
-  _initAuth() {
+  _initAuth(options) {
+    //如果是分享进来的 (来自经销商或者销售人员) options.dealerId
+    const shareDealerId = options.dealerId || '';
+    //处理shareDealerId,在手机号码登录时，再次带入网页，应该长驻缓存
+    shareDealerId && (wx.setStorageSync('shareDealerId', shareDealerId));
     //mobileNo  token  userType 
     const mobileNo = wx.getStorageSync('mobileNo');
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
     //有用户手机缓存  用户身份访问  还是要走一边登录流程 
     if (mobileNo) {
-      // const url = `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
-      // return wx.redirectTo({ url });
-      /**** */
       testLogin({ phone: mobileNo }).then((res) => {
         console.log(res.data);
         if (res.result == "success" && res.data) {
-          const { mobileNo, token, userType } = res.data;
+          const { mobileNo, token, userType, dealerId } = res.data;
           mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
+          dealerId && (wx.setStorageSync('dealerId', dealerId));
+          //如果没有dealerId，用分享的shareDealerId，都没有有则为空
+          const willDealerId = dealerId || shareDealerId;
           wx.redirectTo({
-            url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}`
+            url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
           })
         }
       }).catch(err => {
         //TODO 
         console.log(err);
       })
+      return true;
     }
     //有用户头像缓存  
     if (nickName && avatarUrl) {
       return wx.redirectTo({
-        url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}`
+        url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&shareDealerId=${shareDealerId}`
       })
     } else { //没有用户头像缓存,判断是否授权 scope.userInfo
       getWxSetting().then(res => {
@@ -65,7 +70,7 @@ Page({
             wx.setStorageSync('nickName', nickName);
             wx.setStorageSync('avatarUrl', avatarUrl);
             wx.redirectTo({
-              url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}`
+              url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&shareDealerId=${shareDealerId}`
             })
           }).catch(err => {
             console.log(err)
@@ -78,11 +83,12 @@ Page({
   //用户点击授权CallBack
   bindGetUserInfo(e) {
     console.log(e.detail.userInfo)
+    const shareDealerId = wx.getStorageSync('shareDealerId') || '';
     const { nickName, avatarUrl } = e.detail.userInfo;
     wx.setStorageSync('nickName', nickName);
     wx.setStorageSync('avatarUrl', avatarUrl);
     wx.redirectTo({
-      url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}`
+      url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&shareDealerId=${shareDealerId}`
     })
   },
 })
