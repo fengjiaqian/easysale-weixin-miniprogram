@@ -1,4 +1,8 @@
-import { getWxSetting, fetchWxUserInfo, testLogin } from '../../utils/loginPack'
+import {
+  getWxSetting,
+  fetchWxUserInfo,
+  testLogin
+} from '../../utils/loginPack'
 Page({
   data: {
 
@@ -13,7 +17,20 @@ Page({
      *   没有手机号码，是否有用户头像或者userInfo授权，带入头像昵称，以访客形式访问。
      * 
      */
-    this._initAuth(options);
+    var _this = this;
+    wx.showModal({
+      title: '提示',
+      content: '是否清空缓存',
+      success(res) {
+        if (res.confirm) {
+          wx.clearStorageSync();
+          _this._initAuth(options);
+        } else if (res.cancel) {
+          _this._initAuth(options);
+        }
+      }
+    })
+    //this._initAuth(options);
   },
   onReady: function () {
 
@@ -38,10 +55,17 @@ Page({
     const avatarUrl = wx.getStorageSync('avatarUrl');
     //有用户手机缓存  用户身份访问  还是要走一边登录流程 
     if (mobileNo) {
-      testLogin({ phone: mobileNo }).then((res) => {
+      testLogin({
+        phone: mobileNo
+      }).then((res) => {
         console.log(res.data);
         if (res.result == "success" && res.data) {
-          const { mobileNo, token, userType, dealerId } = res.data;
+          const {
+            mobileNo,
+            token,
+            userType,
+            dealerId
+          } = res.data;
           mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
           dealerId && (wx.setStorageSync('dealerId', dealerId));
           //如果没有dealerId，用分享的shareDealerId，都没有有则为空
@@ -66,7 +90,10 @@ Page({
         if (res.authSetting['scope.userInfo']) {
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框，自动跳转到首页
           fetchWxUserInfo().then(res => {
-            const { nickName, avatarUrl } = res.userInfo;
+            const {
+              nickName,
+              avatarUrl
+            } = res.userInfo;
             wx.setStorageSync('nickName', nickName);
             wx.setStorageSync('avatarUrl', avatarUrl);
             wx.redirectTo({
@@ -84,7 +111,10 @@ Page({
   bindGetUserInfo(e) {
     console.log(e.detail.userInfo)
     const shareDealerId = wx.getStorageSync('shareDealerId') || '';
-    const { nickName, avatarUrl } = e.detail.userInfo;
+    const {
+      nickName,
+      avatarUrl
+    } = e.detail.userInfo;
     wx.setStorageSync('nickName', nickName);
     wx.setStorageSync('avatarUrl', avatarUrl);
     wx.redirectTo({

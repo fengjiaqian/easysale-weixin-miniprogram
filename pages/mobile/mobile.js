@@ -63,15 +63,13 @@ Page({
   //测试登录
   _testLogin(event) {
     const { userType } = event.target.dataset;
-    console.log(userType);
-    let phone = '15500000002';
+    let phone = '15500000003';
     if (userType == 1) {
-      phone = '15071124354';
+      phone = '13871067026';
     } else if (userType == 2) {
-      phone = '13422058968';
+      phone = '13334562345';
     }
     testLogin({ phone }).then((res) => {
-      console.log(res.data);
       if (res.result == "success" && res.data) {
         const { mobileNo, token, userType, dealerId } = res.data;//bindSuccess
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
