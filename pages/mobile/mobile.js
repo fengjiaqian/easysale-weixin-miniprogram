@@ -51,7 +51,7 @@ Page({
         dealerId && (wx.setStorageSync('dealerId', dealerId));
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
         const willDealerId = dealerId || this.shareDealerId
-        wx.redirectTo({
+        wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
         })
       }
