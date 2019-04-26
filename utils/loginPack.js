@@ -2,7 +2,7 @@
  * created by yuanzishu 2019/04/08
  * 二次封装微信登录相关api  返回promise
  */
-import {_apiUrl} from '../config'
+import { _apiUrl } from '../config'
 
 const $ajax = function (url, method, data) {
   url = _apiUrl + url;
@@ -124,6 +124,30 @@ const testLogin = function (data) {
   })
 }
 
+// 获取微信openId
+const getWXOpenId = function (authCode) {
+
+  const url = 'login/getWXOpenId',
+    method = 'post';
+  const data = { authCode }
+  return $ajax(url, method, data).then(res => {
+    return Promise.resolve(res.data);
+  }).catch(err => {
+    return Promise.reject(err);
+  })
+}
+
+// 
+const getWXUserPhone = function (data) {
+
+  const url = '/login/getWXUserPhone',
+    method = 'post';
+  return $ajax(url, method, data).then(res => {
+    return Promise.resolve(res.data);
+  }).catch(err => {
+    return Promise.reject(err);
+  })
+}
 export {
   fetchWxCode,
   getWxSetting,
@@ -131,5 +155,7 @@ export {
   loginWithWxCode,
   testLogin,
   getWxLocation,
-  getWxAuthorize
+  getWxAuthorize,
+  getWXOpenId,
+  getWXUserPhone
 }

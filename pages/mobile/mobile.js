@@ -1,4 +1,4 @@
-import { fetchWxCode, loginWithWxCode, testLogin } from '../../utils/loginPack'
+import { fetchWxCode, loginWithWxCode, getWXUserPhone,testLogin } from '../../utils/loginPack'
 
 Page({
   data: {
@@ -35,7 +35,9 @@ Page({
     }
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
+    const weChatToken = wx.getStorageSync('weChatToken') || '';
     const params = {
+      weChatToken,
       encryptedData,
       iv,
       authCode: this.wxCode,
@@ -43,8 +45,8 @@ Page({
       avatarUrl
     }
     //多给 nickName avatarUrl
-    loginWithWxCode(params).then((res) => {
-      console.log(res.data);
+    getWXUserPhone(params).then((res) => {
+      console.log(res);
       if (res.result == "success" && res.data) {
         const { mobileNo, token, userType, dealerId } = res.data;    //bindSuccess
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));

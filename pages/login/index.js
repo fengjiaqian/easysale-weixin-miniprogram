@@ -1,7 +1,9 @@
 import {
   getWxSetting,
   fetchWxUserInfo,
-  testLogin
+  testLogin,
+  fetchWxCode,
+  getWXOpenId
 } from '../../utils/loginPack'
 Page({
   data: {
@@ -9,14 +11,29 @@ Page({
   },
   onLoad: function (options) {
     /**
+     * //第一次 openid 
+     * init   wx.login()==>code==>后台==>返回(微信token)          后台知道openid 和 session_key
+     * 用户点击==》 个人信息==》  回调个人信息  ==》    前端写入缓存用户信息
+     * 进去首页  此时还没有绑定手机 
+     * 绑定手机页面==》再获取code + 用户信息 + 回调手机信息 + wxToken==》后台 ==》 返回（mobieNo  业务token  userType  ）   后台知道openid+用户信息解密数据+手机号，映射并返回  
+     *  
+     * //第二次  
+     * 没有手机号码缓存 
+     * 微信授权登录 =》   没绑定情况下   绑定情况下 
+     */
+
+    /**
      * 1.第一次进入程序，获取userInfo（昵称和头像url），并带入网页，我的界面可以展示。
      *   此时，所有页面均以访客模式浏览，根据页面权限是否进入手机号一键登录，调用wx.login(),并获取手机号，发送给后台，此时带入昵称和头像信息。
      *   后台保存手机号，昵称，头像；并返回前端token+userId+mobileNo。客户端缓存用户信息，处理下一次进入逻辑。
      *   如果客户拒绝，正常游客访问。
      * 2.第二次，判断缓存中用户信息，是否有手机号码，有的话走正常登录逻辑（）。
      *   没有手机号码，是否有用户头像或者userInfo授权，带入头像昵称，以访客形式访问。
-     * 
      */
+
+
+    this._fetchWxCode();
+
     var _this = this;
     wx.showModal({
       title: '提示',
@@ -44,6 +61,19 @@ Page({
   onUnload: function () {
 
   },
+  _fetchWxCode() {
+    fetchWxCode().then(res => {
+      const wxCode = res.code;
+      getWXOpenId(wxCode).then(res => {
+        if (res.result == "success" && res.data) {
+          const { weChatToken, bindSuccess = false } = res.data;
+          weChatToken && (wx.setStorageSync('weChatToken', weChatToken));
+        }
+      })
+    }).catch(err => {
+      console.log(err);
+    })
+  },
   _initAuth(options) {
     //如果是分享进来的 (来自经销商或者销售人员) options.dealerId
     const shareDealerId = options.dealerId || '';
@@ -54,32 +84,32 @@ Page({
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
     //有用户手机缓存  用户身份访问  还是要走一边登录流程 
-    if (mobileNo) {
-      testLogin({
-        phone: mobileNo
-      }).then((res) => {
-        console.log(res.data);
-        if (res.result == "success" && res.data) {
-          const {
-            mobileNo,
-            token,
-            userType,
-            dealerId
-          } = res.data;
-          mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
-          dealerId && (wx.setStorageSync('dealerId', dealerId));
-          //如果没有dealerId，用分享的shareDealerId，都没有有则为空
-          const willDealerId = dealerId || shareDealerId;
-          wx.reLaunch({
-            url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
-          })
-        }
-      }).catch(err => {
-        //TODO 
-        console.log(err);
-      })
-      return true;
-    }
+    // if (mobileNo) {
+    //   testLogin({
+    //     phone: mobileNo
+    //   }).then((res) => {
+    //     console.log(res.data);
+    //     if (res.result == "success" && res.data) {
+    //       const {
+    //         mobileNo,
+    //         token,
+    //         userType,
+    //         dealerId
+    //       } = res.data;
+    //       mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
+    //       dealerId && (wx.setStorageSync('dealerId', dealerId));
+    //       //如果没有dealerId，用分享的shareDealerId，都没有有则为空
+    //       const willDealerId = dealerId || shareDealerId;
+    //       wx.reLaunch({
+    //         url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
+    //       })
+    //     }
+    //   }).catch(err => {
+    //     //TODO 
+    //     console.log(err);
+    //   })
+    //   return true;
+    // }
     //有用户头像缓存  
     if (nickName && avatarUrl) {
       return wx.redirectTo({
