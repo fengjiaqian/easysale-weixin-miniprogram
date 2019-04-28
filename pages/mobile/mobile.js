@@ -1,4 +1,4 @@
-import { fetchWxCode, loginWithWxCode, getWXUserPhone,testLogin } from '../../utils/loginPack'
+import { fetchWxCode, loginWithWxCode, getWXUserPhone, testLogin } from '../../utils/loginPack'
 
 Page({
   data: {
@@ -48,11 +48,13 @@ Page({
     getWXUserPhone(params).then((res) => {
       console.log(res);
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, dealerId } = res.data;    //bindSuccess
+        const { bindSuccess, mobileNo, token, userType, dealerId, shopHistoryList = [] } = res.data;    //bindSuccess
+        //
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
+        const historyDealerId = shopHistoryList.length ? shopHistoryList[0] : '';
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
-        const willDealerId = dealerId || this.shareDealerId
+        const willDealerId = dealerId || this.shareDealerId || historyDealerId;
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
         })
@@ -87,5 +89,4 @@ Page({
       console.log(err);
     })
   }
-
 })
