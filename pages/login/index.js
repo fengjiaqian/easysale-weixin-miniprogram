@@ -11,14 +11,6 @@ Page({
   },
   onLoad: function (options) {
     /**
-     * //第一次 openid 
-     * init   wx.login()==>code==>后台==>返回(微信weChatToken)          后台知道openid 和 session_key
-     * 用户点击==》 个人信息==》  回调个人信息  ==》    前端写入缓存用户信息
-     * 进去首页  此时还没有绑定手机 
-     * 绑定手机页面==》再获取code + 用户信息 + 回调手机信息 + wxToken==》后台 ==》 返回（mobileNo  业务token  userType  ）   后台知道openid+用户信息解密数据+手机号，映射并返回  
-     *  
-     * //第二次  
-     * 没有手机号码缓存 
      * 微信授权登录 
      *  wx.login()==>code =》    
      * 1).绑定情况下 ：后台知道openid 和 session_key , 直接去匹配用户mobileNo , 匹配到了， 请求success ，bindSuccess==true, 返回前端auth信息；
@@ -29,30 +21,19 @@ Page({
      * 失败则bindSuccess==false，提示绑定失败。
      * 问题： code只能用一次，不同的code，后台查到的openid一样，返回微信weChatToken不一样。
      */
-
-    /**
-     * 1.第一次进入程序，获取userInfo（昵称和头像url），并带入网页，我的界面可以展示。
-     *   此时，所有页面均以访客模式浏览，根据页面权限是否进入手机号一键登录，调用wx.login(),并获取手机号，发送给后台，此时带入昵称和头像信息。
-     *   后台保存手机号，昵称，头像；并返回前端token+userId+mobileNo。客户端缓存用户信息，处理下一次进入逻辑。
-     *   如果客户拒绝，正常游客访问。
-     * 2.第二次，判断缓存中用户信息，是否有手机号码，有的话走正常登录逻辑（）。
-     *   没有手机号码，是否有用户头像或者userInfo授权，带入头像昵称，以访客形式访问。
-     */
     this._fetchWxCode(options);
-    var _this = this;
-    wx.showModal({
-      title: '提示',
-      content: '是否清空缓存',
-      success(res) {
-        if (res.confirm) {
-          wx.clearStorageSync();
-          // _this._initAuth(options);
-        } else if (res.cancel) {
-          // _this._initAuth(options);
-        }
-      }
-    })
-    //this._initAuth(options);
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '是否清空缓存',
+    //   success(res) {
+    //     if (res.confirm) {
+    //       wx.clearStorageSync();
+    //       _this._fetchWxCode(options);
+    //     } else if (res.cancel) {
+    //       _this._fetchWxCode(options);
+    //     }
+    //   }
+    // })
   },
   onReady: function () {
 
@@ -119,7 +100,7 @@ Page({
                     })
                   }).catch(err => {
                     console.log(err)
-                    //没有授权的情况  等待用户点击  进去bindGetUserInfo回调。
+                    //没有授权的情况   等待用户点击   进去bindGetUserInfo回调。
                   })
                 }
               })
@@ -133,7 +114,7 @@ Page({
     })
   },
   _initAuth(options) {
-    //如果是分享进来的 (来自经销商或者销售人员) options.dealerId
+    //如果是分享进来的 (来自经销商或者销售人员)  options.dealerId
     const shareDealerId = options.dealerId || '';
     //处理shareDealerId,在手机号码登录时，再次带入网页，应该长驻缓存
     shareDealerId && (wx.setStorageSync('shareDealerId', shareDealerId));
