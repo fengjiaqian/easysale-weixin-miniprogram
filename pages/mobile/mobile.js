@@ -64,11 +64,11 @@ Page({
   _testLogin(event) {
     const { userType } = event.target.dataset;
     console.log(userType);
-    let phone = '15500000002';
+    let phone = '15966668888';
     if (userType == 1) {
-      phone = '15071124354';
+      phone = '13667141637';
     } else if (userType == 2) {
-      phone = '13422058968';
+      phone = '15866668888';
     }
     testLogin({ phone }).then((res) => {
       console.log(res.data);
