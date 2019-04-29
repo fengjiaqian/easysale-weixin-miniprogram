@@ -1,4 +1,4 @@
-import { fetchWxCode, loginWithWxCode, testLogin } from '../../utils/loginPack'
+import { fetchWxCode, loginWithWxCode, getWXUserPhone, testLogin } from '../../utils/loginPack'
 
 Page({
   data: {
@@ -35,7 +35,9 @@ Page({
     }
     const nickName = wx.getStorageSync('nickName');
     const avatarUrl = wx.getStorageSync('avatarUrl');
+    const weChatToken = wx.getStorageSync('weChatToken') || '';
     const params = {
+      weChatToken,
       encryptedData,
       iv,
       authCode: this.wxCode,
@@ -43,15 +45,17 @@ Page({
       avatarUrl
     }
     //多给 nickName avatarUrl
-    loginWithWxCode(params).then((res) => {
-      console.log(res.data);
+    getWXUserPhone(params).then((res) => {
+      console.log(res);
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, dealerId } = res.data;    //bindSuccess
+        const { bindSuccess, mobileNo, token, userType, dealerId, shopHistoryList = [] } = res.data;    //bindSuccess
+        //
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
+        const historyDealerId = shopHistoryList.length ? shopHistoryList[0] : '';
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
-        const willDealerId = dealerId || this.shareDealerId
-        wx.redirectTo({
+        const willDealerId = dealerId || this.shareDealerId || historyDealerId;
+        wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
         })
       }
@@ -63,22 +67,20 @@ Page({
   //测试登录
   _testLogin(event) {
     const { userType } = event.target.dataset;
-    console.log(userType);
-    let phone = '15966668888';
+    let phone = '15500000003';
     if (userType == 1) {
-      phone = '13667141637';
+      phone = '13871067026';
     } else if (userType == 2) {
-      phone = '15866668888';
+      phone = '13334562345';
     }
     testLogin({ phone }).then((res) => {
-      console.log(res.data);
       if (res.result == "success" && res.data) {
         const { mobileNo, token, userType, dealerId } = res.data;//bindSuccess
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
         //如果没有dealerId，用分享的shareDealerId，都没有有则为空
         const willDealerId = dealerId || this.shareDealerId
-        wx.redirectTo({
+        wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
         })
       }
@@ -87,5 +89,4 @@ Page({
       console.log(err);
     })
   }
-
 })
