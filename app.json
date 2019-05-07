@@ -3,7 +3,8 @@
     "pages/login/index",
     "pages/mobile/mobile",
     "pages/webview/index",
-    "pages/location/location"
+    "pages/location/location",
+    "pages/shareShop/shareShop"
   ],
   "window": {
     "backgroundTextStyle": "light",
