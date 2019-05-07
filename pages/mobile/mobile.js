@@ -48,7 +48,7 @@ Page({
     getWXUserPhone(params).then((res) => {
       console.log(res);
       if (res.result == "success" && res.data) {
-        const { bindSuccess, mobileNo, token, userType, shopId, shopHistoryList = [] } = res.data;    //bindSuccess
+        const { bindSuccess, mobileNo, token, userType, shopId="", shopHistoryList = [] } = res.data;    //bindSuccess
         //
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
@@ -76,7 +76,7 @@ Page({
     }
     testLogin({ phone }).then((res) => {
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, shopId, shopHistoryList = [] } = res.data;//bindSuccess
+        const { mobileNo, token, userType, shopId="", shopHistoryList = [] } = res.data;//bindSuccess
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
