@@ -66,7 +66,7 @@ Page({
             const { mobileNo,
               token,
               userType,
-              shopId="",
+              shopId = "",
               shopHistoryList = []
             } = res.data;
             let dealerId = shopId;

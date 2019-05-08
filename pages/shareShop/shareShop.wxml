@@ -1,0 +1,4 @@
+<view class="contains">
+<image src="{{resultData.path}}" class="img"></image>
+<button class="share-btn" open-type='share'>分享给好友</button>
+</view>
