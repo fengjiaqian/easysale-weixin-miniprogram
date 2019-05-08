@@ -1,7 +1,6 @@
 import {
   getWxSetting,
   fetchWxUserInfo,
-  testLogin,
   fetchWxCode,
   getWXOpenId
 } from '../../utils/loginPack'
@@ -48,6 +47,10 @@ Page({
 
   },
   _fetchWxCode(options) {
+    /**
+     * 2019/05/06 需求变更后  原有的dealerId不代表店铺id了 改为shopId 
+     * 代码改动  只新增变量  含义不明确。
+     */
     //如果是分享进来的 (来自经销商或者销售人员) options.dealerId
     const shareDealerId = options.dealerId || '';
     //处理shareDealerId,在手机号码登录时，再次带入网页，应该长驻缓存
@@ -63,12 +66,13 @@ Page({
             const { mobileNo,
               token,
               userType,
-              dealerId,
+              shopId="",
               shopHistoryList = []
             } = res.data;
+            let dealerId = shopId;
             mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
             dealerId && (wx.setStorageSync('dealerId', dealerId));
-            const historyDealerId = shopHistoryList.length ? shopHistoryList[0].dealerId: '';
+            const historyDealerId = shopHistoryList.length ? shopHistoryList[0].shopId : '';
             //如果没有dealerId，用分享的shareDealerId，都没有有则为空
             const willDealerId = dealerId || shareDealerId || historyDealerId;
             wx.reLaunch({
@@ -112,69 +116,6 @@ Page({
       //TODO err处理 
       console.log(err);
     })
-  },
-  _initAuth(options) {
-    //如果是分享进来的 (来自经销商或者销售人员)  options.dealerId
-    const shareDealerId = options.dealerId || '';
-    //处理shareDealerId,在手机号码登录时，再次带入网页，应该长驻缓存
-    shareDealerId && (wx.setStorageSync('shareDealerId', shareDealerId));
-    //mobileNo  token  userType 
-    const mobileNo = wx.getStorageSync('mobileNo');
-    const nickName = wx.getStorageSync('nickName');
-    const avatarUrl = wx.getStorageSync('avatarUrl');
-    // 有用户手机缓存  用户身份访问  还是要走一边登录流程 
-    if (mobileNo) {
-      testLogin({
-        phone: mobileNo
-      }).then((res) => {
-        console.log(res.data);
-        if (res.result == "success" && res.data) {
-          const {
-            mobileNo,
-            token,
-            userType,
-            dealerId
-          } = res.data;
-          mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
-          dealerId && (wx.setStorageSync('dealerId', dealerId));
-          //如果没有dealerId，用分享的shareDealerId，都没有有则为空
-          const willDealerId = dealerId || shareDealerId;
-          wx.reLaunch({
-            url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
-          })
-        }
-      }).catch(err => {
-        //TODO 
-        console.log(err);
-      })
-      return true;
-    }
-    //有用户头像缓存  
-    if (nickName && avatarUrl) {
-      return wx.redirectTo({
-        url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&shareDealerId=${shareDealerId}`
-      })
-    } else { //没有用户头像缓存, 判断是否授权 scope.userInfo
-      getWxSetting().then(res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框，自动跳转到首页
-          fetchWxUserInfo().then(res => {
-            const {
-              nickName,
-              avatarUrl
-            } = res.userInfo;
-            wx.setStorageSync('nickName', nickName);
-            wx.setStorageSync('avatarUrl', avatarUrl);
-            wx.redirectTo({
-              url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&shareDealerId=${shareDealerId}`
-            })
-          }).catch(err => {
-            console.log(err)
-            //没有授权的情况  等待用户点击  进去bindGetUserInfo回调。
-          })
-        }
-      })
-    }
   },
   //用户点击授权CallBack
   bindGetUserInfo(e) {
