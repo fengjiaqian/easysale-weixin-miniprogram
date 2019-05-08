@@ -72,7 +72,7 @@ Page({
             let dealerId = shopId;
             mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
             dealerId && (wx.setStorageSync('dealerId', dealerId));
-            const historyDealerId = shopHistoryList.length ? shopHistoryList[0].dealerId : '';
+            const historyDealerId = shopHistoryList.length ? shopHistoryList[0].shopId : '';
             //如果没有dealerId，用分享的shareDealerId，都没有有则为空
             const willDealerId = dealerId || shareDealerId || historyDealerId;
             wx.reLaunch({
