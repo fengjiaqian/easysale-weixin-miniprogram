@@ -7,7 +7,7 @@
 }
 .img{
 width: 422rpx;
-height: 128rpx;
+height: 334rpx;
 margin-top: 260rpx;
 margin-left: 164rpx;
 border-radius: 12rpx
