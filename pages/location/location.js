@@ -73,7 +73,8 @@ Page({
               let city = res.result.address_component.city;
               let county = res.result.address_component.district;
               let street = res.result.address_component.street;
-              let address = province + city + county + street
+              let recommendAddress = res.result.formatted_addresses.recommend
+              let address = province + city + recommendAddress
               let addressData = {
                 address: address || res.result.address,
                 longitude: data.latitude,
