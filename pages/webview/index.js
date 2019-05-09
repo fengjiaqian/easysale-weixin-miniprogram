@@ -15,9 +15,9 @@ Page({
       })
     }
     if (options.token) {
-      const { mobileNo, token, userType, shareDealerId } = options;
+      const { mobileNo, token, userType, shareDealerId, shareUserType = "" } = options;
       return this.setData({
-        url: webViewUrl + `/#/navi/home?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareDealerId=${shareDealerId}`
+        url: webViewUrl + `/#/navi/home?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${shareDealerId}`
       })
     }
     // TODO 
