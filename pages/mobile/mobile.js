@@ -48,14 +48,14 @@ Page({
     getWXUserPhone(params).then((res) => {
       console.log(res);
       if (res.result == "success" && res.data) {
-        const { bindSuccess, mobileNo, token, userType, shopId="", shopHistoryList = [] } = res.data;    //bindSuccess
+        const { bindSuccess, mobileNo, token, userType, shopId = "", shopHistoryList = [] } = res.data;    //bindSuccess
         //
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
         const historyDealerId = shopHistoryList.length ? shopHistoryList[0].shopId : '';
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
-        const willDealerId = shareDealerId || dealerId || historyDealerId;
+        const willDealerId = this.shareDealerId || dealerId || historyDealerId;
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
         })
@@ -76,7 +76,7 @@ Page({
     }
     testLogin({ phone }).then((res) => {
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, shopId="", shopHistoryList = [] } = res.data;//bindSuccess
+        const { mobileNo, token, userType, shopId = "", shopHistoryList = [] } = res.data;//bindSuccess
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
         dealerId && (wx.setStorageSync('dealerId', dealerId));
