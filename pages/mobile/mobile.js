@@ -57,7 +57,10 @@ Page({
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
         const willDealerId = this.shareDealerId || dealerId || historyDealerId;
         //当分享的shareDealerId存在时，此时的userType应为3  发版前bug 
-        const shareUserType = shareDealerId ? 3 : userType;
+        let shareUserType = "";
+        if (this.shareDealerId != shopId) {
+          shareUserType = shareDealerId ? 3 : userType;
+        }
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
         })
@@ -86,7 +89,10 @@ Page({
         //如果没有dealerId，用分享的shareDealerId，都没有有则为空
         const willDealerId = this.shareDealerId || dealerId || historyDealerId;
         //当分享的shareDealerId存在时，此时的userType应为3  发版前bug 
-        const shareUserType = shareDealerId ? 3 : userType;
+        let shareUserType = "";
+        if (this.shareDealerId != shopId) {
+          shareUserType = this.shareDealerId ? 3 : userType;
+        }
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
         })
