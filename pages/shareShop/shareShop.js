@@ -1,4 +1,5 @@
 // pages/shareShop/shareShop.js
+import { webViewUrl } from '../../config'
 Page({
 
   /**
@@ -49,12 +50,13 @@ Page({
   
   returnWebview(res) {
     let jumpUrl = this.data.jumpUrl
-    const finalUrl = `/pages/webview/index?resourceType=shareShop&jumpUrl=${jumpUrl}`
+    const finalUrl = webViewUrl + `/#/${jumpUrl}`
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2];
     prePage.setData({
       url: finalUrl
     });
+    console.log(finalUrl)
     wx.navigateBack({
       delta: 1
     })

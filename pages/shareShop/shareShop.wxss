@@ -6,11 +6,12 @@
 
 }
 .img{
-width: 422rpx;
-height: 334rpx;
-margin-top: 260rpx;
-margin-left: 164rpx;
-border-radius: 12rpx
+width:500rpx;
+height:396rpx;
+margin-top:260rpx;
+margin-left:125rpx;
+border-radius:12rpx;
+
 
 }
 .share-btn{
