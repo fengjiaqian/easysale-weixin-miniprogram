@@ -1,5 +1,5 @@
-import { fetchWxCode, loginWithWxCode, getWXUserPhone, testLogin } from '../../utils/loginPack'
-
+import { fetchWxCode, getWXUserPhone, testLogin } from '../../utils/loginPack'
+import { $yjpToast } from '../../components/yjp'
 Page({
   data: {
 
@@ -30,7 +30,8 @@ Page({
   getPhoneNumber(e) {
     const { encryptedData, iv } = e.detail;
     if (!encryptedData) {
-      console.log('获取手机号码失败')
+      const msg = "微信一键登录失败,请重试"
+      $yjpToast.show({ text: msg })
       return false;
     }
     const nickName = wx.getStorageSync('nickName');
@@ -59,7 +60,7 @@ Page({
         //当分享的shareDealerId存在时，此时的userType应为3  发版前bug 
         let shareUserType = "";
         if (this.shareDealerId != shopId) {
-          shareUserType = shareDealerId ? 3 : userType;
+          shareUserType = this.shareDealerId ? 3 : userType;
         }
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
@@ -68,6 +69,8 @@ Page({
     }).catch(err => {
       //TODO 
       console.log(err);
+      const msg = "微信一键登录失败,请重试"
+      $yjpToast.show({ text: msg })
     })
   },
   //测试登录
