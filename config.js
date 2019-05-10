@@ -10,9 +10,9 @@ const _apiUrl = 'http://easysalemini.release.yijiupidev.com/easysaleapi/';   //r
 const TencentMapKey = `VR2BZ-F7ACQ-AJH5M-G6GCJ-AR246-YCF4Q`
 
 //webViewUrl
-const webViewUrl = 'http://197.168.12.103:9999'
+// const webViewUrl = 'http://197.168.12.103:9999'
 // const webViewUrl = 'http://easysalemini.test.yijiupidev.com';
-// const webViewUrl = 'http://easysalemini.release.yijiupidev.com'//release
+const webViewUrl = 'http://easysalemini.release.yijiupidev.com'//release
 // const webViewUrl = 'https://easysalemini.yijiupi.com'//生产
 
 module.exports = {

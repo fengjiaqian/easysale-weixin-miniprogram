@@ -2,7 +2,7 @@
 <template is="toast" data="{{ ...$yjp.toast }}" />
 <view>
     <image class="tel-log" src="/images/ic-log.png"></image>
-    <view class="tel-name">易经销</view>
+    <view class="tel-name">易经商</view>
     <button class="tel-btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
         手机号码一键登录
     </button>

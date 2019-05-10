@@ -7,7 +7,7 @@
     <view class="info-content">
       <image class="background" src="/images/ic-bg.png" />
       <image class="log" src="/images/ic-log.png" />
-      <view class="explain">为了完整地体验易经销，我们需要您的授权信息（包含用户昵称和头像）</view>
+      <view class="explain">为了完整地体验易经商，我们需要您的授权信息（包含用户昵称和头像）</view>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">确认授权</button>
     </view>
   </view>
