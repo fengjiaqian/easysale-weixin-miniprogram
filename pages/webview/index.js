@@ -9,7 +9,7 @@ Page({
     console.log(options)
     //从定位页面过来回到定位页面去
     if (options.resourceType == 'location') {
-      let passData = JSON.parse(options.passData)
+      let passData = JSON.parse(decodeURIComponent(options.passData))
       return this.setData({
         url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
       })
