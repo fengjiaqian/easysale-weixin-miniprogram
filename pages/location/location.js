@@ -96,7 +96,7 @@ Page({
       })
   },
   returnWebview(res){
-    let data = decodeURIComponent(JSON.stringify(Object.assign(this.data.passData,res)))
+    let data = encodeURIComponent(JSON.stringify(Object.assign(this.data.passData,res)))
     const url = `/pages/webview/index?resourceType=location&passData=${data}`
     return wx.redirectTo({ url });
   },
