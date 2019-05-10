@@ -56,8 +56,13 @@ Page({
         const historyDealerId = shopHistoryList.length ? shopHistoryList[0].shopId : '';
         //如果没有dealerId，用分享的shareDealerId, 都没有有则为空
         const willDealerId = this.shareDealerId || dealerId || historyDealerId;
+        //当分享的shareDealerId存在时，此时的userType应为3  发版前bug 
+        let shareUserType = "";
+        if (this.shareDealerId != shopId) {
+          shareUserType = shareDealerId ? 3 : userType;
+        }
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
         })
       }
     }).catch(err => {
@@ -82,9 +87,14 @@ Page({
         dealerId && (wx.setStorageSync('dealerId', dealerId));
         const historyDealerId = shopHistoryList.length ? shopHistoryList[0].shopId : '';
         //如果没有dealerId，用分享的shareDealerId，都没有有则为空
-        const willDealerId = this.shareDealerId || dealerId || historyDealerId
+        const willDealerId = this.shareDealerId || dealerId || historyDealerId;
+        //当分享的shareDealerId存在时，此时的userType应为3  发版前bug 
+        let shareUserType = "";
+        if (this.shareDealerId != shopId) {
+          shareUserType = this.shareDealerId ? 3 : userType;
+        }
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareDealerId=${willDealerId}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
         })
       }
     }).catch(err => {
