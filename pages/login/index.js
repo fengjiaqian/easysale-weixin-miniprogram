@@ -4,6 +4,7 @@ import {
   fetchWxCode,
   getWXOpenId
 } from '../../utils/loginPack'
+
 Page({
   data: {
 
@@ -20,19 +21,11 @@ Page({
      * 失败则bindSuccess==false，提示绑定失败。
      * 问题： code只能用一次，不同的code，后台查到的openid一样，返回微信weChatToken不一样。
      */
+    wx.showLoading({
+      title: '加载中',
+      mask: true,
+    })
     this._fetchWxCode(options);
-    // wx.showModal({
-    //   title: '提示',
-    //   content: '是否清空缓存',
-    //   success(res) {
-    //     if (res.confirm) {
-    //       wx.clearStorageSync();
-    //       _this._fetchWxCode(options);
-    //     } else if (res.cancel) {
-    //       _this._fetchWxCode(options);
-    //     }
-    //   }
-    // })
   },
   onReady: function () {
 
@@ -58,6 +51,7 @@ Page({
     fetchWxCode().then(res => {
       const wxCode = res.code;
       getWXOpenId(wxCode).then(res => {
+        wx.hideLoading();
         if (res.result == "success" && res.data) {
           const { weChatToken, bindSuccess } = res.data;
           /*************************** */
@@ -116,8 +110,11 @@ Page({
             }
           }
         }
+      }).catch(err => {
+        wx.hideLoading();
       })
     }).catch(err => {
+      wx.hideLoading();
       //TODO err处理 
       console.log(err);
     })

@@ -1,10 +1,5 @@
 /**app.wxss**/
-/**app.wxss**/
-pages {
-    position: relative;
-    z-index: 9999998;
-    background: #fff;
-}
+@import "./components/toast/toast.wxss";
 
 .container {
     height: 100%;
