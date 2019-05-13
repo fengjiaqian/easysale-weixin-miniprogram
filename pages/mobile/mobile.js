@@ -21,9 +21,14 @@ Page({
 
   },
   _fetchWxCode() {
+    wx.showLoading({
+      title: '',
+    })
     fetchWxCode().then(res => {
+      wx.hideLoading();
       this.wxCode = res.code;
     }).catch(err => {
+      wx.hideLoading();
       console.log(err);
     })
   },
@@ -62,8 +67,13 @@ Page({
         if (this.shareDealerId != shopId) {
           shareUserType = this.shareDealerId ? 3 : userType;
         }
+        //是否需要引导
+        let needGuidance = false;
+        if (userType == 3) {
+          needGuidance = true
+        }
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`
         })
       }
     }).catch(err => {
@@ -96,8 +106,13 @@ Page({
         if (this.shareDealerId != shopId) {
           shareUserType = this.shareDealerId ? 3 : userType;
         }
+        //是否需要引导
+        let needGuidance = false;
+        if (userType == 3) {
+          needGuidance = true
+        }
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`
         })
       }
     }).catch(err => {

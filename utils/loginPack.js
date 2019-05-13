@@ -17,7 +17,8 @@ const $ajax = function (url, method, data) {
       data,
       header,
       success(res) {
-        resolve(res)
+        console.log('$ajax', JSON.stringify(res))
+        resolve(res)// {data,headers,...}
       },
       fail(err) {
         reject(err)
@@ -105,7 +106,12 @@ const loginWithWxCode = function (data) {
   const url = 'login/weChatLogin',
     method = 'post';
   return $ajax(url, method, data).then(res => {
-    return Promise.resolve(res.data);
+
+    if (res.data) {
+      return Promise.resolve(res.data);
+    } else {
+      return Promise.reject(res);
+    }
   }).catch(err => {
     return Promise.reject(err);
   })
@@ -118,7 +124,11 @@ const testLogin = function (data) {
   const url = 'login/testLogin',
     method = 'post';
   return $ajax(url, method, data).then(res => {
-    return Promise.resolve(res.data);
+    if (res.data) {
+      return Promise.resolve(res.data);
+    } else {
+      return Promise.reject(res);
+    }
   }).catch(err => {
     return Promise.reject(err);
   })
@@ -130,8 +140,13 @@ const getWXOpenId = function (authCode) {
   const url = 'login/getWXOpenId',
     method = 'post';
   const data = { authCode }
-  return $ajax(url, method, data).then(res => {
-    return Promise.resolve(res.data);
+  return $ajax(url, method, data).then(res => { //res {result ,data, message}
+    console.log('data', JSON.stringify(res.data))
+    if (res.data) {
+      return Promise.resolve(res.data);
+    } else {
+      return Promise.reject(res);
+    }
   }).catch(err => {
     return Promise.reject(err);
   })
@@ -140,10 +155,15 @@ const getWXOpenId = function (authCode) {
 // 
 const getWXUserPhone = function (data) {
 
-  const url = '/login/getWXUserPhone',
+  const url = 'login/getWXUserPhone',
     method = 'post';
   return $ajax(url, method, data).then(res => {
-    return Promise.resolve(res.data);
+    console.log('data', JSON.stringify(res.data))
+    if (res.data) {
+      return Promise.resolve(res.data);
+    } else {
+      return Promise.reject(res);
+    }
   }).catch(err => {
     return Promise.reject(err);
   })

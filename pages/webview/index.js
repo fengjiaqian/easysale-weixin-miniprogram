@@ -15,9 +15,10 @@ Page({
       })
     }
     if (options.token) {
-      const { mobileNo, token, userType, shareDealerId, shareUserType = "" } = options;
+      const { mobileNo, token, userType, shareDealerId, shareUserType = "", needGuidance = false } = options;
+      const routePath = needGuidance ? '/identity' : '/navi/home';
       return this.setData({
-        url: webViewUrl + `/#/navi/home?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${shareDealerId}`
+        url: webViewUrl + `/#${routePath}?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${shareDealerId}`
       })
     }
     // TODO 

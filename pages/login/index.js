@@ -74,8 +74,13 @@ Page({
             if (shareDealerId != shopId) {
               shareUserType = shareDealerId ? 3 : userType;
             }
+            //是否需要引导
+            let needGuidance = false;
+            if (userType == 3) {
+              needGuidance = true
+            }
             wx.reLaunch({
-              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}`
+              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`
             })
           } else {
             /*************************** */
