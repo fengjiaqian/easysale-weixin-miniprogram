@@ -86,7 +86,7 @@ Page({
   //测试登录
   _testLogin(event) {
     const { userType } = event.target.dataset;
-    let phone = '15500000003';
+    let phone = '15500000005';
     if (userType == 1) {
       phone = '13871067026';
     } else if (userType == 2) {
