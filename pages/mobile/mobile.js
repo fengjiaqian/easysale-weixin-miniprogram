@@ -54,7 +54,7 @@ Page({
     getWXUserPhone(params).then((res) => {
       console.log(res);
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, shopId = "", shopHistoryList = [], authenticationStatus = 1 } = res.data;    //bindSuccess
+        const { mobileNo, token, userType, shopId = "", shopHistoryList = [], authenticationStatus = 1, userState = 1 } = res.data;    //bindSuccess
         // 
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
@@ -73,7 +73,7 @@ Page({
           needGuidance = 1
         }
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}`
         })
       }
     }).catch(err => {
@@ -86,7 +86,7 @@ Page({
   //测试登录
   _testLogin(event) {
     const { userType } = event.target.dataset;
-    let phone = '15500000013';
+    let phone = '13507140306';
     if (userType == 1) {
       phone = '15071124354';
     } else if (userType == 2) {

@@ -62,8 +62,9 @@ Page({
               userType,
               shopId = "",
               shopHistoryList = [],
-              authenticationStatus = 1
-            } = res.data;
+              authenticationStatus = 1,
+              userState = 1
+            } = res.data; //userState 0：认证中    1：已认证  
             let dealerId = shopId;
             mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
             dealerId && (wx.setStorageSync('dealerId', dealerId));
@@ -81,7 +82,7 @@ Page({
               needGuidance = 1
             }
             wx.reLaunch({
-              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`
+              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}`
             })
           } else {
             /*************************** */
