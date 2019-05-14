@@ -61,7 +61,8 @@ Page({
               token,
               userType,
               shopId = "",
-              shopHistoryList = []
+              shopHistoryList = [],
+              authenticationStatus = 1
             } = res.data;
             let dealerId = shopId;
             mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
@@ -74,10 +75,10 @@ Page({
             if (shareDealerId != shopId) {
               shareUserType = shareDealerId ? 3 : userType;
             }
-            //是否需要引导
-            let needGuidance = false;
-            if (userType == 3) {
-              needGuidance = true
+            //是否需要引导  authenticationStatus  0 未认证  1 已认证
+            let needGuidance = 0;
+            if (userType == 3 && !Number(authenticationStatus)) {
+              needGuidance = 1
             }
             wx.reLaunch({
               url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}`

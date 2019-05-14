@@ -15,9 +15,8 @@ Page({
       })
     }
     if (options.token) {
-      const { mobileNo, token, userType, shareDealerId, shareUserType = "", needGuidance = false } = options;
-      // const routePath = needGuidance ? '/identity' : '/navi/home';
-      const routePath = '/navi/home';
+      const { mobileNo, token, userType, shareDealerId, shareUserType = "", needGuidance = 0 } = options;
+      const routePath = Number(needGuidance) ? '/identity' : '/navi/home';
       return this.setData({
         url: webViewUrl + `/#${routePath}?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${shareDealerId}`
       })
