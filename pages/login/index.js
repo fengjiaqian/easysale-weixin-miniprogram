@@ -62,9 +62,9 @@ Page({
               userType,
               shopId = "",
               shopHistoryList = [],
-              authenticationStatus = 1,
               userState = 1
-            } = res.data; //userState 0：认证中    1：已认证  
+            } = res.data;
+            //userState （0：认证中 1：已认证 2：未认证）, 如果审核拒绝了就是游客。
             let dealerId = shopId;
             mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
             dealerId && (wx.setStorageSync('dealerId', dealerId));
@@ -76,9 +76,9 @@ Page({
             if (shareDealerId != shopId) {
               shareUserType = shareDealerId ? 3 : userType;
             }
-            //是否需要引导  authenticationStatus  0 未认证  1 已认证
+            //是否需要引导  
             let needGuidance = 0;
-            if (userType == 3 && !Number(authenticationStatus)) {
+            if (userType == 3 && Number(userState) === 2) {
               needGuidance = 1
             }
             wx.reLaunch({
