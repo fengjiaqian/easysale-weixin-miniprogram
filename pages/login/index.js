@@ -77,12 +77,15 @@ Page({
               shareUserType = shareDealerId ? 3 : userType;
             }
             //是否需要引导  
-            let needGuidance = 0;
+            //第二次登录，如果还需要引导，说明用户第一次拒绝引导。
+            //需求：用户在引导页没有完成注册，选择退出后，下次登录也能够直接进入店铺首页，在下单、开店、点击“我的”时候再次出现引导页（目前是未完成注册，登录就直接跳到引导页了）
+            let needGuidance = 0, routeRequireGuidance = 0;
             if (userType == 3 && Number(userState) === 2) {
-              needGuidance = 1
+              needGuidance = 1;
+              routeRequireGuidance = 1; //网页多出一个判断
             }
             wx.reLaunch({
-              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}`
+              url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&routeRequireGuidance=${routeRequireGuidance}&userState=${userState}`
             })
           } else {
             /*************************** */

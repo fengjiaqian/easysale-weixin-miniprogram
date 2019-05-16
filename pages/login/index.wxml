@@ -1,8 +1,5 @@
-
-<view>
-  <!-- <nav-bar navbar-data='{{nvabarData}}'></nav-bar>
-  <view class='home-page' style='margin-top: {{height}}px'>home page</view> -->
-  <view class="commodity_screen"></view>
+<view class="container">
+  <!-- <view class="commodity_screen"></view>
   <view class="commodity_attr_box">
     <view class="info-content">
       <image class="background" src="/images/ic-bg.png" />
@@ -10,5 +7,15 @@
       <view class="explain">为了完整地体验易经商，我们需要您的授权信息（包含用户昵称和头像）</view>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">确认授权</button>
     </view>
+  </view> -->
+  <view class="login-page">
+    <view class="login-banner-wrap">
+      <image class="ic-banner" src="/images/ic-ad-bg.png" mode="aspectFit" />
+      <image class="wave" src="/images/wave.png" mode="aspectFit" />
+      <image class="wave wave-bg" src="/images/wave.png" mode="aspectFit" />
+    </view>
+    <image class="ic-txt" src="/images/ic-ad-text.png" mode="aspectFit" />
+    <button class="btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信授权</button>
   </view>
+  <view class="copy-right">Copyright © 2014-2019 Yijiupi. All Rights Reserved</view>
 </view>

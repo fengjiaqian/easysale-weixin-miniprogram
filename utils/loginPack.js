@@ -17,7 +17,6 @@ const $ajax = function (url, method, data) {
       data,
       header,
       success(res) {
-        console.log('$ajax', JSON.stringify(res))
         resolve(res)// {data,headers,...}
       },
       fail(err) {
@@ -141,7 +140,6 @@ const getWXOpenId = function (authCode) {
     method = 'post';
   const data = { authCode }
   return $ajax(url, method, data).then(res => { //res {result ,data, message}
-    console.log('data', JSON.stringify(res.data))
     if (res.data) {
       return Promise.resolve(res.data);
     } else {
@@ -158,7 +156,6 @@ const getWXUserPhone = function (data) {
   const url = 'login/getWXUserPhone',
     method = 'post';
   return $ajax(url, method, data).then(res => {
-    console.log('data', JSON.stringify(res.data))
     if (res.data) {
       return Promise.resolve(res.data);
     } else {

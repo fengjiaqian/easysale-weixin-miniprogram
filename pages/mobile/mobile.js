@@ -72,6 +72,7 @@ Page({
         if (userType == 3 && Number(userState) === 2) {
           needGuidance = 1
         }
+        wx.removeStorageSync('shareDealerId');//清楚分享的常驻缓存
         wx.reLaunch({
           url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}`
         })

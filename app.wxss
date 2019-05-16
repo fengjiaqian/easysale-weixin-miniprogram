@@ -1,12 +1,17 @@
 /**app.wxss**/
 @import "./components/toast/toast.wxss";
 
-.container {
+page {
+    font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+    font-size: 24rpx;
+    width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    padding: 200rpx 0;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #F4F4F4;
     box-sizing: border-box;
 }
