@@ -56,11 +56,12 @@ Page({
                     const {weChatToken, bindSuccess} = res.data;
                     /*************************** */
                     if (bindSuccess) {
-                        //绑定成功的，直接返回auth信息，不用二次点击手机号，直接进去首页。  
+                        //绑定成功的，直接返回auth信息，不用二次点击手机号，直接进去首页。
                         const {
                             mobileNo,
                             userType,
                             shopId = "",
+                            shopList = [],
                             shopHistoryList = [],
                             userState = 1
                         } = res.data;
@@ -73,8 +74,14 @@ Page({
                         const willDealerId = shareDealerId || dealerId || historyDealerId;
                         //当分享的shareDealerId存在时，此时的userType应为3  发版前bug
                         let shareUserType = "";
-                        if (shareDealerId != shopId) {
-                            shareUserType = shareDealerId ? 3 : userType;
+                        if (shareDealerId) {
+                            const shareShop = shopList.find(shop => shop.shopId == shareDealerId)
+                            if (!shareShop) {
+                                shareUserType = 3;
+                            } else {
+                                shareUserType = shareShop.userType;
+                            }
+
                         }
                         //是否需要引导
                         //第二次登录，如果还需要引导，说明用户第一次拒绝引导。
