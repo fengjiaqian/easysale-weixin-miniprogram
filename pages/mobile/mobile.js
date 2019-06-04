@@ -54,7 +54,7 @@ Page({
     getWXUserPhone(params).then((res) => {
       console.log(res);
       if (res.result == "success" && res.data) {
-        const { mobileNo, token, userType, shopId = "", shopHistoryList = [], userState = 1 } = res.data; //bindSuccess
+        const { mobileNo, token, userType, shopId = "", shopHistoryList = [], userState = 1, permissionState } = res.data; //bindSuccess
         // userState （0：认证中 1：已认证 2：未认证）, 如果审核拒绝了就是游客。
         const dealerId = shopId;
         mobileNo && (wx.setStorageSync('mobileNo', mobileNo));
@@ -74,7 +74,7 @@ Page({
         }
         wx.removeStorageSync('shareDealerId');//清楚分享的常驻缓存
         wx.reLaunch({
-          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}`
+          url: `/pages/webview/index?mobileNo=${mobileNo}&token=${encodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${willDealerId}&needGuidance=${needGuidance}&userState=${userState}&permissionState=${permissionState}`
         })
       }
     }).catch(err => {
