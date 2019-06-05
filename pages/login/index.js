@@ -139,17 +139,22 @@ Page({
   },
   //用户点击授权CallBack
   bindGetUserInfo(e) {
-    console.log(e.detail.userInfo)
-    const shareDealerId = wx.getStorageSync('shareDealerId') || '';
-    const token = wx.getStorageSync('token') || ''
-    const {
-      nickName,
-      avatarUrl
-    } = e.detail.userInfo;
-    wx.setStorageSync('nickName', nickName);
-    wx.setStorageSync('avatarUrl', avatarUrl);
-    wx.redirectTo({
-      url: `/pages/webview/index?nickName=${nickName}&avatarUrl=${avatarUrl}&token=${encodeURIComponent(token)}&shareDealerId=${shareDealerId}`
-    })
+    //同意了授权  正常进入否则不管  
+    if (e.detail.userInfo != undefined){
+      console.log("授权：" + e.detail.userInfo)
+      const shareDealerId = wx.getStorageSync('shareDealerId') || '';
+      const token = wx.getStorageSync('token') || ''
+      const {
+        nickName,
+        avatarUrl
+      } = e.detail.userInfo;
+      const nickName_ = encodeURIComponent(nickName);
+      const avatarUrl_ = encodeURIComponent(avatarUrl);
+      wx.setStorageSync('nickName', nickName);
+      wx.setStorageSync('avatarUrl', avatarUrl);
+      wx.redirectTo({
+        url: `/pages/webview/index?nickName=${nickName_}&avatarUrl=${avatarUrl_}&token=${encodeURIComponent(token)}&shareDealerId=${shareDealerId}`
+      })
+    }
   },
 })
