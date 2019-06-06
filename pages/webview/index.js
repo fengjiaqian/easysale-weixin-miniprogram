@@ -26,14 +26,14 @@ Page({
               url: webViewUrl + `/#${routePath}?mobileNo=${mobileNo}&token=${decodeURIComponent(token)}&userType=${userType}&shareUserType=${shareUserType}&shareDealerId=${shareDealerId}&userState=${userState}&routeRequireGuidance=${routeRequireGuidance}&permissionState=${permissionState}`
             })
         } else if (options.nickName) {
-          
-            const nickName = decodeURIComponent(options.nickName);
-            const avatarUrl = decodeURIComponent(options.avatarUrl);
+
+            const nickName = options.nickName;
+            const avatarUrl = options.avatarUrl;
         
             const shareDealerId = options.shareDealerId || '';
             const token = options.token || '';
             this.setData({
-              url: webViewUrl + `/#/navi/home?nickName=${encodeURIComponent(nickName)}&avatarUrl=${encodeURIComponent(avatarUrl)}&token=${decodeURIComponent(token)}&shareDealerId=${shareDealerId}`
+              url: webViewUrl + `/#/navi/home?nickName=${nickName}&avatarUrl=${avatarUrl}&token=${decodeURIComponent(token)}&shareDealerId=${shareDealerId}`
             })
         }
     },

@@ -140,7 +140,7 @@ Page({
   //用户点击授权CallBack
   bindGetUserInfo(e) {
     //同意了授权  正常进入否则不管  
-    if (e.detail.userInfo != undefined){
+    if (e.detail.userInfo){
       console.log("授权：" + e.detail.userInfo)
       const shareDealerId = wx.getStorageSync('shareDealerId') || '';
       const token = wx.getStorageSync('token') || ''
