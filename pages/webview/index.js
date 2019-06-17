@@ -15,6 +15,14 @@ Page({
                 url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
             })
         }
+      if (options.resourceType == 'orderprinting') {
+        let passData = JSON.parse(decodeURIComponent(options.passData))
+        return this.setData({
+          url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
+        })
+      }
+      
+
         if (options.mobileNo) {
           const { mobileNo, token, userType, shareDealerId, shareUserType = "", needGuidance = 0, userState = 1, routeRequireGuidance = 0, permissionState} = options;
             let routePath = Number(needGuidance) ? '/identity' : '/navi/home';

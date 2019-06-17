@@ -1,0 +1,28 @@
+.contains{
+  width: 100vw;
+  height: 100vh;
+  background-color: #fff;
+
+
+}
+.img{
+width:676rpx;
+height:535rpx;
+margin-top:180rpx;
+margin-left:37rpx;
+border-radius:12rpx;
+
+
+}
+.share-btn{
+  position: absolute;
+  bottom: 277rpx;
+  left: 37rpx;
+  width: 676rpx;
+ height: 94rpx;
+ line-height: 94rpx;
+ background-color: #FF5638;
+ color: #fff;
+ font-size: 32rpx
+
+}
