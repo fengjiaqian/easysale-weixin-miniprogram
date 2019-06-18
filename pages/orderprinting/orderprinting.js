@@ -44,14 +44,21 @@ Page({
           if (arr.length == 2 && arr[0] == "ORDER"){
             console.log(arr[1]);
             let orderprintingData = {
-              uuid: arr[1]
+              uuid: arr[1],
+              code:"200"
             }
             that.returnWebview({ orderprintingData })
           }else{
-            that.returnWebview({})
+            let orderprintingData = {
+              code: "-2"
+            }
+            that.returnWebview({ orderprintingData})
           }
         } else {  
-          that.returnWebview({})
+          let orderprintingData = {
+            code: "-1"
+          }
+          that.returnWebview({ orderprintingData})
         }
      
       }
