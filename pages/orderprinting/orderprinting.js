@@ -61,6 +61,11 @@ Page({
           that.returnWebview({ orderprintingData})
         }
      
+      },fail(){
+        let orderprintingData = {
+          code: "-1"
+        }
+        that.returnWebview({ orderprintingData })
       }
     })
   },
