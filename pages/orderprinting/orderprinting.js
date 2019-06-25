@@ -1,6 +1,7 @@
 // pages/shareShop/shareShop.js
 import { webViewUrl } from '../../config'
-let that = null;
+let that;
+var app = getApp();
 Page({
 
   /**
@@ -8,6 +9,7 @@ Page({
    */
     data: {
       passData: {},
+      systemInfo: app.globalData.systemInfo
     },
     onLoad: function (options) {
       that = this;
@@ -15,9 +17,12 @@ Page({
       this.setData({
         passData: data
       })
-      that.sm();
+      // that.sm();
     },
 
+  onShow(){
+    // that.sm();
+  },
   /**
    * 生命周期函数--监听页面隐藏
    */
@@ -34,6 +39,7 @@ Page({
   sm(){
     wx.scanCode({
       success(res) {
+        console.log(res, "px")
         let param = {
            status:'',
            par:null
@@ -61,7 +67,8 @@ Page({
           that.returnWebview({ orderprintingData})
         }
      
-      },fail(){
+      },fail(e){
+        console.log(e,"px")
         let orderprintingData = {
           code: "-1"
         }

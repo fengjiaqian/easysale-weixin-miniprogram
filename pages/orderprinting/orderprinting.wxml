@@ -1,3 +1,5 @@
 <view class="contains">
-
+  <!-- <view wx:if="{{systemInfo.isIos}}" bindtap='sm'>点击扫码</view> -->
+  <!-- 请在PC端访问jxs.release.yijiupidev.com获取二维码 -->
+  <view wx:if="{{systemInfo.isIos}}" class="btn" bindtap='sm'>点击扫码</view>
 </view>
