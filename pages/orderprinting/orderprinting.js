@@ -17,11 +17,11 @@ Page({
       this.setData({
         passData: data
       })
-      // that.sm();
+       that.sm();
     },
 
   onShow(){
-    // that.sm();
+     that.sm();
   },
   /**
    * 生命周期函数--监听页面隐藏
