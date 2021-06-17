@@ -15,6 +15,12 @@ Page({
                 url: webViewUrl + `/#${passData.path}?passData=${options.passData}`
             })
         }
+        //跳转到支付结果页面
+        if (options.resourceType == 'orderpay') {
+            return this.setData({
+                url: webViewUrl + `/#/orderResult?passData=${options.passData}`
+            })
+        }
       if (options.resourceType == 'orderprinting') {
         let passData = JSON.parse(decodeURIComponent(options.passData))
         return this.setData({
