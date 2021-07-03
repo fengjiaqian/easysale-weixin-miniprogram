@@ -15,7 +15,7 @@
       <image class="wave wave-bg" src="/images/wave.png" mode="aspectFit" />
     </view>
     <image class="ic-txt" src="/images/ic-ad-text.png" mode="aspectFit" />
-    <button class="btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">微信授权</button>
+    <button class="btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" wx:if="{{showButton}}">微信授权</button>
   </view>
-  <view class="copy-right">Copyright © 2014-2019 Yijiupi. All Rights Reserved</view>
+  <view class="copy-right">Copyright © 2021-2025 dianzu. All Rights Reserved</view>
 </view>

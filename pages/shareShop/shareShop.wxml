@@ -1,4 +1,4 @@
 <view class="contains">
-<image src="{{resultData.path}}" class="img"></image>
+<canvas type="2d" id="myCanvas" style='width:{{canvasWidth}}px;height:{{canvasHeight}}px'></canvas>
 <button class="share-btn" open-type='share'>分享给好友</button>
 </view>

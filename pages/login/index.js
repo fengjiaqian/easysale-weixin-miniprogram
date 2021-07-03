@@ -6,7 +6,9 @@ import {
 } from '../../utils/loginPack'
 
 Page({
-  data: {},
+  data: {
+    showButton:true
+  },
   onLoad: function (options) {
     /**
      * 微信授权登录
@@ -50,7 +52,7 @@ Page({
       const wxCode = res.code;
       getWXOpenId(wxCode).then(res => {
         wx.hideLoading();
-        const { token } = res.data;
+        const { token} = res.data;
         token && wx.setStorageSync('token', token);
         if (res.result == "success" && res.data) {
           const { weChatToken, bindSuccess } = res.data;
