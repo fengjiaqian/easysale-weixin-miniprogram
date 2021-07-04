@@ -59,7 +59,7 @@ Page({
           /*************************** */
           if (bindSuccess) {
             //绑定成功的，直接返回auth信息，不用二次点击手机号，直接进去首页。
-            const {
+            let {
               mobileNo,
               userType,
               shopId = "",
@@ -78,6 +78,7 @@ Page({
             //当分享的shareDealerId存在时，此时的userType应为3  发版前bug
             let shareUserType = "";
             if (shareDealerId) {
+              shopList = shopList||[]
               const shareShop = shopList.find(shop => shop.shopId == shareDealerId)
               if (!shareShop) {
                 shareUserType = 3;
