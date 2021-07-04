@@ -1,6 +1,23 @@
 // pages/shareShop/shareShop.js
 import { webViewUrl } from '../../config'
 var myCanvas = null;
+/**
+ * 截取字符串(通过substring实现并支持中英文混合)
+ * @param str
+ * @param n 需要截取的长度
+ * @returns {*}
+ */
+function subStrCn(str,startNum,endNum){
+  let r = /[^\x00-\xff]/g;
+  if(str.replace(r,"**").length<=endNum){return str;}
+  let m = Math.floor(endNum/2);
+  for(let i=m; i<str.length; i++){
+    if(str.substr(startNum,i).replace(r,"**").length>=endNum){
+      return str.substr(startNum,endNum);
+    }
+  }
+  return str;
+}
 Page({
 
   /**
@@ -18,7 +35,7 @@ Page({
       let jumpUrl = decodeURIComponent(options.jumpUrl)
       let resultData = decodeURIComponent(options.resultData)
       //console.log('jumpUrl', jumpUrl)
-      console.log('resultData', resultData)
+      //console.log('resultData', resultData)
       this.setData({
         jumpUrl,
         resultData: JSON.parse(resultData) 
@@ -54,19 +71,19 @@ Page({
                   ctx.fillText(formatPhone,20,120)
               }
               ctx.fillStyle='red'
-              ctx.font = "26px '字体','字体','微软雅黑','宋体'"
+              ctx.font = "19px '字体','字体','微软雅黑','宋体'"
               if (resultData.instruction) {
-                  if (resultData.instruction.length > 14) {
-                      const des1 = resultData.instruction.substr(0, 14);
+                  if (resultData.instruction.length > 20) {
+                      const des1 = subStrCn(resultData.instruction,0,20);
                       ctx.fillText(des1, 20,160);
-                      let des2 = resultData.instruction.substr(14,28);
+                      let des2 = subStrCn(resultData.instruction,20,20);
                       ctx.fillText(des2, 20, 200);
-                      if (resultData.instruction.length > 28) {
-                        des2 = resultData.instruction.substr(28, 42);
+                      if (resultData.instruction.length > 40) {
+                        des2 = subStrCn(resultData.instruction,40,20);
                         ctx.fillText(des2, 20, 240);
                       }
-                      if (resultData.instruction.length > 42) {
-                        des2 = resultData.instruction.substr(42, 56);
+                      if (resultData.instruction.length > 60) {
+                        des2 = subStrCn(resultData.instruction,60,20);
                         ctx.fillText(des2, 20, 280);
                       }
                   } else {
@@ -81,7 +98,9 @@ Page({
  * 生命周期函数--监听页面初次渲染完成
  */
   onReady: function () {
-  var that = this;
+  //延迟缓存图片避免画布还没生成
+    setTimeout(() => {
+      var that = this;
        wx.canvasToTempFilePath({
           canvas: myCanvas,
           success: function success(res) {
@@ -96,7 +115,8 @@ Page({
             console.log(res);
           }
         });
-    
+    }, 100)
+    
   },
   /**
    * 生命周期函数--监听页面隐藏
@@ -109,6 +129,9 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
+    if (!this.data.resultData.path) {
+      return false;
+    }
     let resultData = this.data.resultData;
     let shareUrl = "/pages/login/index";
     if (resultData.shopId) {
@@ -130,7 +153,7 @@ Page({
     prePage.setData({
       url: finalUrl
     });
-    console.log(finalUrl)
+    //console.log(finalUrl)
     wx.navigateBack({
       delta: 1
     })

@@ -7,7 +7,7 @@ Page({
         url: "",
     },
     onLoad: function (options) {
-        console.log("<><><><><><><><><><><><>"+JSON.stringify(options));
+        console.log(JSON.stringify(options));
         //从定位页面过来回到定位页面去
         if (options.resourceType == 'location') {
             let passData = JSON.parse(decodeURIComponent(options.passData))
